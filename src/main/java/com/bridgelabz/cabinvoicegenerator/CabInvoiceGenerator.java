@@ -1,5 +1,7 @@
 package com.bridgelabz.cabinvoicegenerator;
 
+import java.util.List;
+
 public class CabInvoiceGenerator {
     public static final int RATE_PER_KILOMETER = 10 ;
     public static final int MINIMUM_FARE = 5 ;
@@ -22,12 +24,17 @@ public class CabInvoiceGenerator {
      * Calculating total fare for multiple cab rides by calling calculateTotalFare method.
      * @return total fare calculated by array of distance and time inputs
      */
-    public InvoiceSummary calculateMultipleRides(Rides[] ride) {
+    public InvoiceSummary calculateMultipleRides(List<Rides> ride) {
         double totalFare = 0;
         for (Rides rides : ride)
         {
             totalFare += calculateTotalFare(rides.distance,rides.time);
         }
-        return new InvoiceSummary(ride.length , totalFare);
+        return new InvoiceSummary(ride.size() , totalFare);
+    }
+
+    public List<Rides> getListOfRides(Person person)
+    {
+        return person.getPersonList();
     }
 }
