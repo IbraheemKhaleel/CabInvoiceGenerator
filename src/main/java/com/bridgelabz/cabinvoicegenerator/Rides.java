@@ -1,8 +1,8 @@
 package com.bridgelabz.cabinvoicegenerator;
 
 public class Rides {
-    public final double distance;
-    public final int time;
+    public final double distance ;
+    public final int time ;
 
     /**
      * @param distance distance travelled by customer in kilometers

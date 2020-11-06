@@ -14,9 +14,7 @@ public class CabInvoiceGenerator {
     public double calculateTotalFare(double distance , int time )
     {
         double totalFare = distance*RATE_PER_KILOMETER + time ;
-        if (totalFare < 5)
-            return MINIMUM_FARE ;
-        return totalFare;
+        return Math.max(totalFare,MINIMUM_FARE) ;
     }
 
     /**
@@ -24,12 +22,12 @@ public class CabInvoiceGenerator {
      * Calculating total fare for multiple cab rides by calling calculateTotalFare method.
      * @return total fare calculated by array of distance and time inputs
      */
-    public double calculateMultipleRides(Rides[] ride) {
+    public InvoiceSummary calculateMultipleRides(Rides[] ride) {
         double totalFare = 0;
         for (Rides rides : ride)
         {
             totalFare += calculateTotalFare(rides.distance,rides.time);
         }
-        return totalFare;
+        return new InvoiceSummary(ride.length , totalFare);
     }
 }
