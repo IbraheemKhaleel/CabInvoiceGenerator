@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class CabInvoiceGeneratorTest {
     CabInvoiceGenerator cabInvoiceGenerator = null ;
 
@@ -21,14 +23,16 @@ public class CabInvoiceGeneratorTest {
         double fare = cabInvoiceGenerator.calculateTotalFare(distance, time) ;
         Assert.assertEquals(106 , fare,0.5);
     }
-
+    
     @Test
-    public void givenMultipleRides_When_Calculated_ShouldReturnInvoiceSummary()
+    public void givenUserID_WhenChecked_ShouldReturnRespectiveUserInvoice()
     {
-        Rides[] ride = {new Rides(2.0 , 3),
-                        new Rides(3.0, 4)} ;
-        InvoiceSummary invoiceSummary = cabInvoiceGenerator.calculateMultipleRides(ride) ;
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 2*10+3+3*10+4) ;
+        Person person =new Person("jake");
+        person.add(6 , 4) ;
+        person.add(8 , 7) ;
+        List<Rides> userRideList = cabInvoiceGenerator.getListOfRides(person) ;
+        InvoiceSummary invoiceSummary = cabInvoiceGenerator.calculateMultipleRides(userRideList) ;
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 6*10+4+8*10+7) ;
         Assert.assertEquals(expectedInvoiceSummary, invoiceSummary ) ;
     }
 }
