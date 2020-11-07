@@ -4,15 +4,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
-
 public class CabInvoiceGeneratorTest {
-    CabInvoiceGenerator cabInvoiceGenerator = null ;
+    InvoiceService invoiceService = null ;
 
     @Before
     public void setUp() throws Exception
     {
-        cabInvoiceGenerator = new CabInvoiceGenerator();
+        invoiceService = new InvoiceService();
     }
 
     @Test
@@ -20,19 +18,29 @@ public class CabInvoiceGeneratorTest {
     {
         double distance = 10.05 ;
         int time = 6 ;
-        double fare = cabInvoiceGenerator.calculateTotalFare(distance, time) ;
-        Assert.assertEquals(106 , fare,0.5);
+        double fare = invoiceService.calculateTotalFare(distance, time) ;
+        Assert.assertEquals(106 , fare,1);
     }
-    
+
     @Test
-    public void givenUserID_WhenChecked_ShouldReturnRespectiveUserInvoice()
+    public void givenMultipleRides_When_Calculated_ShouldReturnInvoiceSummary()
     {
-        Person person =new Person("jake");
-        person.add(6 , 4) ;
-        person.add(8 , 7) ;
-        List<Rides> userRideList = cabInvoiceGenerator.getListOfRides(person) ;
-        InvoiceSummary invoiceSummary = cabInvoiceGenerator.calculateMultipleRides(userRideList) ;
-        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 6*10+4+8*10+7) ;
+        Rides[] ride = {new Rides(2.0 , 3),
+                new Rides(3.0, 4)} ;
+        InvoiceSummary invoiceSummary = invoiceService.calculateMultipleRides(ride) ;
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 2*10+3+3*10+4) ;
+        Assert.assertEquals(expectedInvoiceSummary, invoiceSummary ) ;
+    }
+
+    @Test
+    public void givenUserName_When_Calculated_ShouldReturnUserInvoiceSummary()
+    {
+        String userName = "Gyllenhall" ;
+        Rides[] ride = {new Rides(2.0 , 3),
+                        new Rides(3.0, 4)} ;
+        invoiceService.addRide(userName, ride);
+        InvoiceSummary invoiceSummary = invoiceService.getInvoiceSummary(userName) ;
+        InvoiceSummary expectedInvoiceSummary = new InvoiceSummary(2, 2*10+3+3*10+4) ;
         Assert.assertEquals(expectedInvoiceSummary, invoiceSummary ) ;
     }
 }
