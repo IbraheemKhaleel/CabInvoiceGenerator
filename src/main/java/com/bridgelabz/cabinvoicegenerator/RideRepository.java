@@ -19,7 +19,7 @@ public class RideRepository
     public void addRides(String userName, Rides[] ride)
     {
         ArrayList<Rides> rideList = this.userRides.get(userName) ;
-        if(rideList == null )
+        if ( rideList == null )
             this.userRides.put(userName , new ArrayList<>(Arrays.asList(ride))) ;
     }
 

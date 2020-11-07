@@ -26,7 +26,7 @@ public class InvoiceService {
      */
     public InvoiceSummary calculateMultipleRides(Rides[] ride) {
         double totalFare = 0;
-        for (Rides rides : ride)
+        for ( Rides rides : ride )
         {
             totalFare += calculateTotalFare(rides.distance,rides.time);
         }
