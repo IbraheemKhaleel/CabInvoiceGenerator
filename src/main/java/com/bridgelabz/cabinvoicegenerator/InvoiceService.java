@@ -13,7 +13,7 @@ public class InvoiceService {
      * @param time duration time taken for the ride in minutes
      * @return total fare by calculating both distance and time
      */
-    public double calculateTotalFare(double distance , int time )
+    public double calculateTotalFare( double distance , int time )
     {
         double totalFare = distance*RATE_PER_KILOMETER + time ;
         return Math.max(totalFare,MINIMUM_FARE) ;
